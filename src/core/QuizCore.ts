@@ -19,6 +19,10 @@ class QuizCore {
     return null;
   }
 
+  public getCurrentQuestionIndex(): number {
+    return this.currentQuestionIndex;
+  }
+
   public nextQuestion(): void {
     this.currentQuestionIndex++;
   }

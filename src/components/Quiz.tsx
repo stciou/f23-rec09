@@ -3,7 +3,7 @@ import './Quiz.css';
 import QuizCore from '../core/QuizCore';
 
 const Quiz: React.FC = () => {
-  const quizCore = new QuizCore();
+  const [quizCore] = useState(new QuizCore());
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
   const [currentQuestion, setCurrentQuestion] = useState(quizCore.getCurrentQuestion());
@@ -27,7 +27,7 @@ const Quiz: React.FC = () => {
       setScore(quizCore.getScore());
       setSelectedAnswer(null);
     }
-    
+
     if (quizCore.hasNextQuestion()) {
       quizCore.nextQuestion();
       setCurrentQuestion(quizCore.getCurrentQuestion());
@@ -38,7 +38,7 @@ const Quiz: React.FC = () => {
 
   useEffect(() => {
     setCurrentQuestion(quizCore.getCurrentQuestion());
-  }, [quizCore]);
+  }, [quizCore, quizCore.getCurrentQuestionIndex()]);
 
   if (quizFinished) {
     return (
