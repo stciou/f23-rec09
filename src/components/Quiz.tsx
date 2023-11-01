@@ -59,6 +59,15 @@ const handleButtonClick = (): void => {
     );
   }
 
+  if (state.quizCompleted) {
+    return (
+      <div>
+        <h2>Quiz Completed</h2>
+        <p>Final Score: {state.score} out of {quizCore.getQuestions().length}</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h2>Quiz Question:</h2>
@@ -82,6 +91,7 @@ const handleButtonClick = (): void => {
 
       <button onClick={handleButtonClick}>Next Question</button>
     </div>
+    
   );
 };
 

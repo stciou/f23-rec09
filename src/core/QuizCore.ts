@@ -25,6 +25,10 @@ class QuizCore {
     this.score = 0;
   }
 
+  public getQuestions(): QuizQuestion[] {
+    return this.questions;
+  }
+  
   /**
    * Get the current question.
    * @returns The current question or null if no questions are available.
