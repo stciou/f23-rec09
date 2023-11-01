@@ -13,18 +13,26 @@ const Quiz: React.FC = () => {
     setSelectedAnswer(option);
   }
 
+  const handleSubmit = (): void => {
+    if (selectedAnswer) {
+      quizCore.answerQuestion(selectedAnswer);
+      setScore(quizCore.getScore());
+    }
+    setQuizFinished(true);
+  }
+
   const handleNextQuestion = (): void => {
     if (selectedAnswer) {
       quizCore.answerQuestion(selectedAnswer);
       setScore(quizCore.getScore());
+      setSelectedAnswer(null);
     }
     
     if (quizCore.hasNextQuestion()) {
       quizCore.nextQuestion();
       setCurrentQuestion(quizCore.getCurrentQuestion());
-      setSelectedAnswer(null);
     } else {
-      setQuizFinished(true);
+      handleSubmit();
     }
   }
 
@@ -66,7 +74,9 @@ const Quiz: React.FC = () => {
       <h3>Selected Answer:</h3>
       <p>{selectedAnswer ?? 'No answer selected'}</p>
 
-      <button onClick={handleNextQuestion}>Next Question</button>
+      <button onClick={handleNextQuestion}>
+        {quizCore.hasNextQuestion() ? 'Next Question' : 'Submit'}
+      </button>
     </div>
   );
 };
