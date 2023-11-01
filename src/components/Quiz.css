@@ -3,8 +3,8 @@ Enhance User Experience by adding visual highlights to selected answers
 Hint: You can use the className attribute for highlighting*/
 .selected {
   cursor: pointer;
-  background-color: #e0e0e0;
-  border: 2px solid #3498db;
+  background-color: #e6f7ff;
+  border: 2px solid #1890ff;
 }
   /* Additional styling for better user experience */
   .selected:hover {
