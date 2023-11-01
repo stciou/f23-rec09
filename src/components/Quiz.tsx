@@ -1,12 +1,14 @@
 import React, { Component, useState } from 'react'
 import './Quiz.css'
 import QuizQuestion from '../core/QuizQuestion';
+import QuizCore from '../core/QuizCore';
 
 interface QuizState {
-  questions: QuizQuestion[]
-  currentQuestionIndex: number
-  selectedAnswer: string | null
-  score: number
+  questions: QuizQuestion[];
+  currentQuestionIndex: number;
+  selectedAnswer: string | null;
+  score: number;
+  quizCompleted: boolean;
 }
 
 const Quiz: React.FC = () => {
@@ -17,24 +19,36 @@ const Quiz: React.FC = () => {
       correctAnswer: 'Paris',
     },
   ];
+  
   const [state, setState] = useState<QuizState>({
-    questions: initialQuestions,
-    currentQuestionIndex: 0,  // Initialize the current question index.
-    selectedAnswer: null,  // Initialize the selected answer.
-    score: 0,  // Initialize the score.
+    questions: [],
+    currentQuestionIndex: 0,
+    selectedAnswer: null,
+    score: 0,
+    quizCompleted: false,
   });
 
-  const handleOptionSelect = (option: string): void => {
-    setState((prevState) => ({ ...prevState, selectedAnswer: option }));
+  const quizCore = new QuizCore();
+
+  const currentQuestion = quizCore.getCurrentQuestion();
+
+const handleOptionSelect = (option: string): void => {
+  quizCore.answerQuestion(option);
+  setState((prevState) => ({ ...prevState, selectedAnswer: option }));
+};
+
+const handleButtonClick = (): void => {
+  if (quizCore.hasNextQuestion()) {
+    quizCore.nextQuestion();
+    setState((prevState) => ({ ...prevState, currentQuestionIndex: prevState.currentQuestionIndex + 1, selectedAnswer: null }));
+  } else {
+    setState((prevState) => ({ ...prevState, quizCompleted: true, score: quizCore.getScore() }));
   }
+};
 
-
-  const handleButtonClick = (): void => {
-    // Task3: Implement the logic for button click, such as moving to the next question.
-  } 
 
   const { questions, currentQuestionIndex, selectedAnswer, score } = state;
-  const currentQuestion = questions[currentQuestionIndex];
+  // const currentQuestion = questions[currentQuestionIndex];
 
   if (!currentQuestion) {
     return (
